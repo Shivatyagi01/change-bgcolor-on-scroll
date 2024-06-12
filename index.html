@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        color: #000;
+        background-color: #f4f4f4;
+        transition: background-color 1s ease;
+      }
+      .panel {
+        min-height: 100vh;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-family: sans-serif;
+      }
+      .color-black {
+        background-color: #000000;
+        color: #FFFFFF;
+      }
+
+      body {
+        text-align: center;
+        font-size: 120%;
+        line-height: 1.618;
+      }
+      h1,
+      h2 {
+        font-size: 3em;
+        letter-spacing: -0.05em;
+        line-height: 1.1;
+      }
+      p {
+        margin-bottom: 1.618em;
+      }
+      a {
+        color: #4332cf;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="panel" data-color="white">
+      <div>
+        <h1>Change Background Color on Scroll</h1>
+        <p>
+          Scroll to animate the background colour of the body as a full height panel becomes visible.
+        </p>
+      </div>
+    </div>
+    <div class="panel" data-color="black">
+      <h2>Black panel</h2>
+    </div>
+    <div class="panel" data-color="white">
+      <h2>Indigo panel</h2>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script>
+    $(window)
+      .scroll(function () {
+        // selectors
+        var $window = $(window),
+          $body = $("body"),
+          $panel = $(".panel");
+        var scroll = $window.scrollTop() + $window.height() / 3;
+
+        $panel.each(function () {
+          var $this = $(this);if (
+            $this.position().top <= scroll &&
+            $this.position().top + $this.height() > scroll
+          ) {
+            $body.removeClass(function (index, css) {
+              return (css.match(/(^|\s)color-\S+/g) || []).join(" ");
+            });
+            $body.addClass("color-" + $(this).data("color"));
+          }
+        });
+      })
+      .scroll();
+  </script>
+</html>
